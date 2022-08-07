@@ -204,17 +204,17 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- Register HSaria2
-if spoon.HSaria2 then
-    -- First we need to connect to aria2 rpc host
-    hsaria2_host = hsaria2_host or "http://localhost:6800/jsonrpc"
-    hsaria2_secret = hsaria2_secret or "token"
-    spoon.HSaria2:connectToHost(hsaria2_host, hsaria2_secret)
-
-    hsaria2_keys = hsaria2_keys or {"alt", "D"}
-    if string.len(hsaria2_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hsaria2_keys[1], hsaria2_keys[2], 'Toggle aria2 Panel', function() spoon.HSaria2:togglePanel() end)
-    end
-end
+-- if spoon.HSaria2 then
+--     -- First we need to connect to aria2 rpc host
+--     hsaria2_host = hsaria2_host or "http://localhost:6800/jsonrpc"
+--     hsaria2_secret = hsaria2_secret or "token"
+--     spoon.HSaria2:connectToHost(hsaria2_host, hsaria2_secret)
+-- 
+--     hsaria2_keys = hsaria2_keys or {"alt", "D"}
+--     if string.len(hsaria2_keys[2]) > 0 then
+--         spoon.ModalMgr.supervisor:bind(hsaria2_keys[1], hsaria2_keys[2], 'Toggle aria2 Panel', function() spoon.HSaria2:togglePanel() end)
+--     end
+-- end
 
 ----------------------------------------------------------------------------------------------------
 -- Register Hammerspoon Search
@@ -368,21 +368,21 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- Register browser tab typist: Type URL of current tab of running browser in markdown format. i.e. [title](link)
-hstype_keys = hstype_keys or {"alt", "V"}
-if string.len(hstype_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hstype_keys[1], hstype_keys[2], "Type Browser Link", function()
-        local safari_running = hs.application.applicationsForBundleID("com.apple.Safari")
-        local chrome_running = hs.application.applicationsForBundleID("com.google.Chrome")
-        if #safari_running > 0 then
-            local stat, data = hs.applescript('tell application "Safari" to get {URL, name} of current tab of window 1')
-            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
-        elseif #chrome_running > 0 then
-            local stat, data = hs.applescript('tell application "Google Chrome" to get {URL, title} of active tab of window 1')
-            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
-        end
-    end)
-end
-
+--hstype_keys = hstype_keys or {"alt", "V"}
+--if string.len(hstype_keys[2]) > 0 then
+--    spoon.ModalMgr.supervisor:bind(hstype_keys[1], hstype_keys[2], "Type Browser Link", function()
+--        local safari_running = hs.application.applicationsForBundleID("com.apple.Safari")
+--        local chrome_running = hs.application.applicationsForBundleID("com.google.Chrome")
+--        if #safari_running > 0 then
+--            local stat, data = hs.applescript('tell application "Safari" to get {URL, name} of current tab of window 1')
+--            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
+--        elseif #chrome_running > 0 then
+--            local stat, data = hs.applescript('tell application "Google Chrome" to get {URL, title} of active tab of window 1')
+--            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
+--        end
+--    end)
+--end
+--
 ----------------------------------------------------------------------------------------------------
 -- Register Hammerspoon console
 --hsconsole_keys = hsconsole_keys or {"alt", "Z"}
@@ -402,8 +402,8 @@ local function Chinese()
 end
 
 local function English()
---    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
-    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM")
+    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
+--    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM")
     hs.alert.closeAll(0)
     hs.alert.show(" ABC", 1)
 end
