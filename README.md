@@ -6,7 +6,7 @@ awesome-hammerspoon is my configuration for [Hammerspoon](http://www.hammerspoon
 
 1. Install [Hammerspoon](http://www.hammerspoon.org/) first.
 
-2. `git clone https://github.com/ashfinal/awesome-hammerspoon.git ~/.hammerspoon`
+2. `git clone git@github.com:89ao/.hammerspoon.git`
 
 3. Reload the configutation.
 
@@ -19,6 +19,10 @@ awesome-hammerspoon is my configuration for [Hammerspoon](http://www.hammerspoon
 Just press <kbd>opt</kbd>, plus <kbd>A</kbd> or <kbd>C</kbd> or <kbd>R</kbd>… to start. If need help, press <kbd>tab</kbd> to toggle the keybindings cheatsheet.
 
 Press <kbd>opt</kbd> + <kbd>?</kbd> to toggle the help panel, which will show all <kbd>opt</kbd> related keybindings.
+
+### 自动切换输入法
+根据[InputSourceSelector](https://github.com/minoki/InputSourceSelector)中查到的结果，调整app2Ime中的输入法配置。
+
 
 ### Screenshots
 
