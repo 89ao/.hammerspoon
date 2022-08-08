@@ -389,8 +389,8 @@ spoon.ModalMgr.supervisor:enter()
 
 local function Chinese()
     hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
-    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
---    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
+--    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
+    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
     hs.alert.closeAll(0)
     hs.alert.show("中文拼音", 1)
 end
