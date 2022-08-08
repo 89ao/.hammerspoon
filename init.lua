@@ -4,13 +4,6 @@ hs.window.animationDuration = 0
 hs.application.enableSpotlightForNameSearches(true)
 
 
---require "pomo"
---local hyper = {"ctrl", "alt"}
---
---hs.hotkey.bind(hyper, '9', '🤓 > POMO ON', function() pom_enable() end)
---hs.hotkey.bind(hyper, '0', '😌 > POMO OFF', function() pom_disable() end)
-
-
 local alert = require "hs.alert"
 alert.defaultStyle.strokeColor = {white = 1, alpha = 0}
 alert.defaultStyle.fillColor = {white = 0.05, alpha = 0.75}
@@ -745,13 +738,13 @@ local function pom_update_time()
     if (pom.var.time_left <= 0 ) then
       pom_disable()
       if pom.var.curr_active_type == "🍄" then
-        hs.alert.show("Work Complete!", 2)
+        hs.alert.show("番茄时间完成！", 3)
         pom.var.work_count        =  pom.var.work_count + 1
         pom.var.curr_active_type  = "☕️"
         pom.var.time_left         = pom.config.rest_period_sec
         pom.var.max_time_sec      = pom.config.rest_period_sec
       else
-          hs.alert.show("Done resting.", 2)
+          hs.alert.show("休息时间结束.", 3)
           pom.var.curr_active_type  = "🍄"
           pom.var.time_left         = pom.config.work_period_sec
           pom.var.max_time_sec      = pom.config.work_period_sec
@@ -820,8 +813,6 @@ local applescript = require "hs.applescript"
 -- hyper
 local hyper = {"ctrl", "alt"}
 
-
-require "pomo"
 require "slowq"
 
 hs.hotkey.bind(hyper, '9', '🤓 > POMO ON', function() pom_enable() end)
