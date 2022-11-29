@@ -11,7 +11,7 @@ alert.defaultStyle.radius = 5
 alert.defaultStyle.fadeOutDuration = 0.5
 --alert.defaultStyle.textFont = "Fira Mono"
 alert.defaultStyle.textSize = 18
---alert.defaultStyle.atScreenEdge = 1
+alert.defaultStyle.atScreenEdge = 1
 
 -- Use the standardized config location, if present
 custom_config = hs.fs.pathToAbsolute(os.getenv("HOME") .. '/.config/hammerspoon/private/config.lua')
@@ -388,9 +388,10 @@ end
 spoon.ModalMgr.supervisor:enter()
 
 local function Chinese()
-    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
+--    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
 --    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
-    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
+--    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
+    hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
     hs.alert.closeAll(0)
     hs.alert.show("中文拼音", 1)
 end
@@ -495,6 +496,7 @@ local KEY_APP_PAIRS = {
     D = "iTerm.app",
     V = "MacVim.app",
     J = "AppCleaner.app",
+    X = "Arc.app",
     P = "PyCharm.app"
 }
 
