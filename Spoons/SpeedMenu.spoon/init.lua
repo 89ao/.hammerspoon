@@ -127,7 +127,7 @@ function scan()
         frame = { x = 90, y = "0", h = "1", w = "1", }
         })
     menubaritem:setIcon(canvas:imageFromCanvas())
-    canvas:delete()
+--    canvas:delete()
     canvas = nil
 end
 

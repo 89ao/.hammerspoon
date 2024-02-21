@@ -49,13 +49,14 @@ if not hspoon_list then
     hspoon_list = {
         "AClock",
 --        "BingDaily",
+        "UnsplashZ",
         "CircleClock",
 --        "ClipShow",
         "CountDown",
         "HCalendar",
 --        "Calendar",
 --        "HSaria2",
-        "HSearch",
+--        "HSearch",
 --        "SpeedMenu",
         "WinWin",
 --        "FnMate",
@@ -88,7 +89,7 @@ cmodal:bind('', 'Q', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"a
 cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
 if not hsapp_list then
     hsapp_list = {
-        {key = 'f', name = 'Finder'},
+        {key = 'f', name = 'Marta'},
         {key = 's', name = 'Safari'},
         {key = 't', name = 'WeTERM'},
         {key = 'v', id = 'com.apple.ActivityMonitor'},
@@ -389,9 +390,9 @@ spoon.ModalMgr.supervisor:enter()
 
 local function Chinese()
 --    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
---    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
+    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
 --    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
-    hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
+--    hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
     hs.alert.closeAll(0)
     hs.alert.show("中文拼音", 1)
 end
@@ -432,6 +433,7 @@ local app2Ime = {
     {'/Applications/Sketch.app', 'English'},
     {'/Applications/AppCleaner.app', 'English'},
     {'/Applications/Bitwarden.app', 'English'},
+    {'/Applications/Visual Studio Code.app', 'English'},
     {'/Applications/MWeb Pro.app', 'Chinese'},
     {'/Applications/Microsoft Word.app', 'Chinese'},
     {'/Applications/Microsoft Excel.app', 'Chinese'},
@@ -485,25 +487,29 @@ local KEY_APP_PAIRS = {
 --    E = "Visual Studio Code.app",
     Q = "企业微信.app",
     S = "Safari.app",
-    W = "WeChat.app",
-    E = "WeTERM.app",
+    W = "Notion.app",
     P = "/System/Applications/Preview.app",
-    C = "Google Chrome.app",
-    M = "/System/Applications/Mail.app",
+    C = "Brave Browser.app",
+--    M = "Microsoft Outlook.app",
+    M = "WeTERM.app",
     [1] = "MWeb Pro.app",
     [2] = "Sublime Text.app",
     [3] = "TextMate.app",
-    D = "iTerm.app",
+    D = "Google Chrome.app",
+    E = "iTerm.app",
     V = "MacVim.app",
     J = "AppCleaner.app",
     X = "Arc.app",
-    P = "PyCharm.app"
+    P = "PyCharm.app",
+    G = "QQMusic.app"
 }
 
 -- 显示 Finder: Alt + f
 hs.hotkey.bind({"alt"}, "f", function()
-    hs.application.open("/System/Library/CoreServices/Finder.app")
-    hs.application.get("com.apple.finder"):setFrontmost(true)
+    hs.application.open("/Applications/Marta.app")
+--    hs.application.get("com.apple.finder"):setFrontmost(true)
+--    hs.application.open("/System/Library/CoreServices/Finder.app")
+--    hs.application.get("com.apple.finder"):setFrontmost(true)
 end)
 
 --------------------------------------------------------------------------------------

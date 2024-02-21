@@ -53,7 +53,7 @@ end
 
 function obj:init()
     if obj.timer == nil then
-        obj.timer = hs.timer.doEvery(3*60*60, function() bingRequest() end)
+        obj.timer = hs.timer.doEvery(1*6*60, function() bingRequest() end)
         obj.timer:setNextTrigger(5)
     else
         obj.timer:start()
