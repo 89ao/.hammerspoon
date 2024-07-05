@@ -390,18 +390,22 @@ spoon.ModalMgr.supervisor:enter()
 
 local function Chinese()
 --    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
-    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
+--    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
 --    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
---    hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
+    hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
     hs.alert.closeAll(0)
+    alert.defaultStyle.atScreenEdge = 0
     hs.alert.show("中文拼音", 1)
+    alert.defaultStyle.atScreenEdge = 1
 end
 
 local function English()
     hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
 --    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM")
     hs.alert.closeAll(0)
+    alert.defaultStyle.atScreenEdge = 0
     hs.alert.show(" ABC", 1)
+    alert.defaultStyle.atScreenEdge = 1
 end
 
 -- 备选输入法
@@ -487,29 +491,31 @@ local KEY_APP_PAIRS = {
 --    E = "Visual Studio Code.app",
     Q = "企业微信.app",
     S = "Safari.app",
-    W = "Notion.app",
+    W = "/Users/motorao/Applications/Chrome Apps.localized/ProWork.app",
+    N = "Notion.app",
     P = "/System/Applications/Preview.app",
-    C = "Brave Browser.app",
+    C = "Google Chrome Canary.app",
 --    M = "Microsoft Outlook.app",
     M = "WeTERM.app",
     [1] = "MWeb Pro.app",
-    [2] = "Sublime Text.app",
+    [2] = "CotEditor.app",
     [3] = "TextMate.app",
     D = "Google Chrome.app",
     E = "iTerm.app",
-    V = "MacVim.app",
+--    V = "MacVim.app",
     J = "AppCleaner.app",
     X = "Arc.app",
     P = "PyCharm.app",
-    G = "QQMusic.app"
+--    V = "QQMusic.app",
+    Z = "Chatbox.app"
 }
 
 -- 显示 Finder: Alt + f
 hs.hotkey.bind({"alt"}, "f", function()
-    hs.application.open("/Applications/Marta.app")
---    hs.application.get("com.apple.finder"):setFrontmost(true)
---    hs.application.open("/System/Library/CoreServices/Finder.app")
---    hs.application.get("com.apple.finder"):setFrontmost(true)
+--    hs.application.open("/Applications/Marta.app")
+    hs.application.get("com.apple.finder"):setFrontmost(true)
+    hs.application.open("/System/Library/CoreServices/Finder.app")
+    hs.application.get("com.apple.finder"):setFrontmost(true)
 end)
 
 --------------------------------------------------------------------------------------
