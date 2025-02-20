@@ -49,7 +49,7 @@ if not hspoon_list then
     hspoon_list = {
         "AClock",
 --        "BingDaily",
-        "UnsplashZ",
+--        "UnsplashZ",
         "CircleClock",
 --        "ClipShow",
         "CountDown",
@@ -81,40 +81,38 @@ if string.len(hswhints_keys[2]) > 0 then
 end
 
 ----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- appM modal environment
 spoon.ModalMgr:new("appM")
 local cmodal = spoon.ModalMgr.modal_list["appM"]
-cmodal:bind('', 'escape', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
-cmodal:bind('', 'Q', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
-cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
 if not hsapp_list then
     hsapp_list = {
-        {key = 'f', name = 'Marta'},
-        {key = 's', name = 'Safari'},
-        {key = 't', name = 'WeTERM'},
-        {key = 'v', id = 'com.apple.ActivityMonitor'},
-        {key = 'y', id = 'com.apple.systempreferences'},
-	{key = 'c', id = 'com.google.Chrome'},
-	{key = 'l', name = 'Sublime Text'},
-	{key = 'w', name = 'Mweb Pro'},
+        {key = '1', id = 'com.apple.ActivityMonitor', alias = '活动监视器'},
+        {key = '2', id = 'com.apple.systempreferences', alias = '系统设置'},
+    	{key = '3', name = 'App Store', alias = '应用商店'},
+        {key = '4', name = 'Hammerspoon'},
+    	{key = '5', name = 'Automator', alias = '自动操作'},
+    	{key = '6', name = 'Shortcuts', alias = '快捷指令'},
+    	{key = '7', name = 'Calendar', alias = '日历'},
     }
 end
 for _, v in ipairs(hsapp_list) do
     if v.id then
         local located_name = hs.application.nameForBundleID(v.id)
         if located_name then
-            cmodal:bind('', v.key, located_name, function()
+            cmodal:bind('', v.key, v.alias or located_name, function()
                 hs.application.launchOrFocusByBundleID(v.id)
                 spoon.ModalMgr:deactivate({"appM"})
             end)
         end
     elseif v.name then
-        cmodal:bind('', v.key, v.name, function()
+        cmodal:bind('', v.key, v.alias or v.name, function()
             hs.application.launchOrFocus(v.name)
             spoon.ModalMgr:deactivate({"appM"})
         end)
     end
 end
+cmodal:bind('', 'escape', '关闭窗口', function() spoon.ModalMgr:deactivate({"appM"}) end)
 
 -- Then we register some keybindings with modal supervisor
 hsappM_keys = hsappM_keys or {"alt", "A"}
@@ -125,6 +123,7 @@ if string.len(hsappM_keys[2]) > 0 then
         spoon.ModalMgr:activate({"appM"}, "#FFBD2E", true)
     end)
 end
+
 
 ----------------------------------------------------------------------------------------------------
 -- clipshowM modal environment
@@ -196,39 +195,8 @@ if spoon.ClipShow then
     end
 end
 
-----------------------------------------------------------------------------------------------------
--- Register HSaria2
--- if spoon.HSaria2 then
---     -- First we need to connect to aria2 rpc host
---     hsaria2_host = hsaria2_host or "http://localhost:6800/jsonrpc"
---     hsaria2_secret = hsaria2_secret or "token"
---     spoon.HSaria2:connectToHost(hsaria2_host, hsaria2_secret)
--- 
---     hsaria2_keys = hsaria2_keys or {"alt", "D"}
---     if string.len(hsaria2_keys[2]) > 0 then
---         spoon.ModalMgr.supervisor:bind(hsaria2_keys[1], hsaria2_keys[2], 'Toggle aria2 Panel', function() spoon.HSaria2:togglePanel() end)
---     end
--- end
 
-----------------------------------------------------------------------------------------------------
--- Register Hammerspoon Search
-if spoon.HSearch then
-    hsearch_keys = hsearch_keys or {"alt", "G"}
-    if string.len(hsearch_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hsearch_keys[1], hsearch_keys[2], 'Launch Hammerspoon Search', function() spoon.HSearch:toggleShow() end)
-    end
-end
 
-----------------------------------------------------------------------------------------------------
--- Register Hammerspoon API manual: Open Hammerspoon manual in default browser
-hsman_keys = hsman_keys or {"alt", "H"}
-if string.len(hsman_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hsman_keys[1], hsman_keys[2], "Read Hammerspoon Manual", function()
-        hs.doc.hsdocs.forceExternalBrowser(true)
-        hs.doc.hsdocs.moduleEntitiesInSidebar(true)
-        hs.doc.hsdocs.help()
-    end)
-end
 
 ----------------------------------------------------------------------------------------------------
 -- countdownM modal environment
@@ -360,29 +328,6 @@ if spoon.AClock then
     end
 end
 
-----------------------------------------------------------------------------------------------------
--- Register browser tab typist: Type URL of current tab of running browser in markdown format. i.e. [title](link)
---hstype_keys = hstype_keys or {"alt", "V"}
---if string.len(hstype_keys[2]) > 0 then
---    spoon.ModalMgr.supervisor:bind(hstype_keys[1], hstype_keys[2], "Type Browser Link", function()
---        local safari_running = hs.application.applicationsForBundleID("com.apple.Safari")
---        local chrome_running = hs.application.applicationsForBundleID("com.google.Chrome")
---        if #safari_running > 0 then
---            local stat, data = hs.applescript('tell application "Safari" to get {URL, name} of current tab of window 1')
---            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
---        elseif #chrome_running > 0 then
---            local stat, data = hs.applescript('tell application "Google Chrome" to get {URL, title} of active tab of window 1')
---            if stat then hs.eventtap.keyStrokes("[" .. data[2] .. "](" .. data[1] .. ")") end
---        end
---    end)
---end
---
-----------------------------------------------------------------------------------------------------
--- Register Hammerspoon console
---hsconsole_keys = hsconsole_keys or {"alt", "Z"}
---if string.len(hsconsole_keys[2]) > 0 then
---    spoon.ModalMgr.supervisor:bind(hsconsole_keys[1], hsconsole_keys[2], "Toggle Hammerspoon Console", function() hs.toggleConsole() end)
---end
 
 ----------------------------------------------------------------------------------------------------
 -- Finally we initialize ModalMgr supervisor
@@ -485,30 +430,38 @@ appWatcher:start()
 
 ------------------------------------------
 local KEY_APP_PAIRS = {
---    A = "IntelliJ IDEA CE.app",
---    C = "Google Chrome.app",
---    D = "Dash.app",
---    E = "Visual Studio Code.app",
-    Q = "企业微信.app",
-    S = "Safari.app",
-    W = "/Users/motorao/Applications/Chrome Apps.localized/ProWork.app",
-    N = "Notion.app",
-    P = "/System/Applications/Preview.app",
-    C = "Google Chrome Canary.app",
---    M = "Microsoft Outlook.app",
-    M = "WeTERM.app",
-    [1] = "MWeb Pro.app",
-    [2] = "CotEditor.app",
-    [3] = "TextMate.app",
-    D = "Google Chrome.app",
-    E = "iTerm.app",
---    V = "MacVim.app",
-    J = "AppCleaner.app",
-    X = "Arc.app",
-    P = "PyCharm.app",
---    V = "QQMusic.app",
-    Z = "Chatbox.app"
-}
+    --    A = "IntelliJ IDEA CE.app",
+    --    C = "Google Chrome.app",
+    --    D = "Dash.app",
+    --    E = "Visual Studio Code.app",
+        Q = "企业微信.app",
+        S = "Safari.app",
+    --    W = "微信.app",
+        N = "Arc.app",
+    --    P = "/System/Applications/Preview.app",
+        C = "Google Chrome Canary.app",
+    --    M = "Microsoft Outlook.app",
+        M = "WeTERM.app",
+        [1] = "MWeb Pro.app",
+        [2] = "Notepad--.app",
+    --    [3] = "TextMate.app",
+        D = "Google Chrome.app",
+        E = "iTerm.app",
+    --    V = "MacVim.app",
+        J = "AppCleaner.app",
+        P = "Cursor.app",
+        V = "ima.copilot.app",
+        X = "Lattics.app",
+        Z = "Zotero.app"
+    }
+    
+    -- 显示 Finder: Alt + f
+    hs.hotkey.bind({"shift"}, "f", function()
+        hs.application.open("/Applications/ForkLift.app")
+    --    hs.application.get("com.apple.finder"):setFrontmost(true)
+    --    hs.application.open("/System/Library/CoreServices/Finder.app")
+    --    hs.application.get("com.apple.finder"):setFrontmost(true)
+    end)
 
 -- 显示 Finder: Alt + f
 hs.hotkey.bind({"alt"}, "f", function()
