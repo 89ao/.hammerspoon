@@ -29,11 +29,11 @@ else
         -- Create `~/.hammerspoon/private` directory if not exists.
         hs.fs.mkdir(hs.configdir .. '/private')
     end
-    privateconf = hs.fs.pathToAbsolute(hs.configdir .. '/private/config.lua')
-    if privateconf then
-        -- Load awesomeconfig file if exists
-        require('private/config')
-    end
+--    privateconf = hs.fs.pathToAbsolute(hs.configdir .. '/private/config.lua')
+--    if privateconf then
+--       -- Load awesomeconfig file if exists
+--      require('private/config')
+--    end
 end
 
 hsreload_keys = hsreload_keys or {{"cmd", "shift", "ctrl"}, "R"}
@@ -87,13 +87,17 @@ spoon.ModalMgr:new("appM")
 local cmodal = spoon.ModalMgr.modal_list["appM"]
 if not hsapp_list then
     hsapp_list = {
-        {key = '1', id = 'com.apple.ActivityMonitor', alias = '活动监视器'},
-        {key = '2', id = 'com.apple.systempreferences', alias = '系统设置'},
-    	{key = '3', name = 'App Store', alias = '应用商店'},
-        {key = '4', name = 'Hammerspoon'},
-    	{key = '5', name = 'Automator', alias = '自动操作'},
-    	{key = '6', name = 'Shortcuts', alias = '快捷指令'},
-    	{key = '7', name = 'Calendar', alias = '日历'},
+        {key = '1', name = 'Google Chrome Canary', alias = '自研上云'},
+        {key = '2', name = 'Google Chrome', alias = 'ECM账号'},
+    	{key = '3', name = 'Firefox', alias = '测试账号'},
+        {key = '4', name = 'Zen', alias = '腾讯云私人'},
+        {key = '5', id = 'com.apple.ActivityMonitor', alias = '活动监视器'},
+        {key = '6', id = 'com.apple.systempreferences', alias = '系统设置'},
+    	{key = '7', name = 'App Store', alias = '应用商店'},
+        {key = '8', name = 'Hammerspoon'},
+    	{key = '9', name = 'Automator', alias = '自动操作'},
+    	{key = '0', name = 'Shortcuts', alias = '快捷指令'},
+    	{key = '-', name = 'Calendar', alias = '日历'},
     }
 end
 for _, v in ipairs(hsapp_list) do
@@ -395,14 +399,14 @@ function updateFocusAppInputMethod()
         local appPath = app[1]
         local expectedIme = app[2]
 
-        if focusAppPath == appPath then
-            if expectedIme == 'English' then
-                English()
-            else
-                Chinese()
-            end
-            break
-        end
+--        if focusAppPath == appPath then
+--            if expectedIme == 'English' then
+--                English()
+--            else
+--                Chinese()
+--            end
+--            break
+--        end
     end
 end
 
@@ -437,32 +441,24 @@ local KEY_APP_PAIRS = {
         Q = "企业微信.app",
         S = "Safari.app",
     --    W = "微信.app",
-        N = "Arc.app",
+        N = "Zen.app",
     --    P = "/System/Applications/Preview.app",
         C = "Google Chrome Canary.app",
     --    M = "Microsoft Outlook.app",
-        M = "WeTERM.app",
+        M = "Notion Calendar.app",
         [1] = "MWeb Pro.app",
-        [2] = "Notepad--.app",
-    --    [3] = "TextMate.app",
+        [2] = "/Applications/Sublime Text.app",
+        [3] = "Sticky Notepad.app",
         D = "Google Chrome.app",
         E = "iTerm.app",
     --    V = "MacVim.app",
         J = "AppCleaner.app",
-        P = "Cursor.app",
-        V = "ima.copilot.app",
+        P = "Visual Studio Code.app",
+        V = "Doubao.app",
         X = "Lattics.app",
         Z = "Zotero.app"
     }
     
-    -- 显示 Finder: Alt + f
-    hs.hotkey.bind({"shift"}, "f", function()
-        hs.application.open("/Applications/ForkLift.app")
-    --    hs.application.get("com.apple.finder"):setFrontmost(true)
-    --    hs.application.open("/System/Library/CoreServices/Finder.app")
-    --    hs.application.get("com.apple.finder"):setFrontmost(true)
-    end)
-
 -- 显示 Finder: Alt + f
 hs.hotkey.bind({"alt"}, "f", function()
 --    hs.application.open("/Applications/Marta.app")
@@ -785,4 +781,204 @@ require "slowq"
 hs.hotkey.bind(hyper, '9', '🤓 > POMO ON', function() pom_enable() end)
 hs.hotkey.bind(hyper, '0', '😌 > POMO OFF', function() pom_disable() end)
 
+-- auto reload
+local function reloadConfig(paths)
+    doReload = false
+    for _,file in pairs(paths) do
+        if file:sub(-4) == ".lua" then
+            print("A lua config file changed, reload")
+            doReload = true
+        end
+    end
+    if not doReload then
+        print("No lua file changed, skipping reload")
+        return
+    end
 
+    hs.reload()
+end
+
+configFileWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig)
+configFileWatcher:start()
+
+-- auto close bluetooth when sleep
+function bluetoothSwitch(state)
+    -- state: 0(off), 1(on)
+    cmd = "/usr/local/bin/blueutil --power "..(state)
+    result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+end
+
+function caffeinateCallback(eventType)
+    if (eventType == hs.caffeinate.watcher.screensDidSleep) then
+      print("screensDidSleep")
+    elseif (eventType == hs.caffeinate.watcher.screensDidWake) then
+      print("screensDidWake")
+    elseif (eventType == hs.caffeinate.watcher.screensDidLock) then
+      print("screensDidLock")
+      bluetoothSwitch(0)
+    elseif (eventType == hs.caffeinate.watcher.screensDidUnlock) then
+      print("screensDidUnlock")
+      bluetoothSwitch(1)
+    end
+end
+
+caffeinateWatcher = hs.caffeinate.watcher.new(caffeinateCallback)
+caffeinateWatcher:start()
+
+-- Hammerspoon 配置文件
+-- 电源状态监听器 - 自动管理系统休眠策略
+
+local powerWatcher = nil
+local menuBarItem = nil
+local lastPowerState = nil  -- 记录上次的电源状态
+
+-- 显示定位提示的辅助函数
+local function showPositionedAlert(message, duration)
+    hs.alert.closeAll(0)
+    alert.defaultStyle.atScreenEdge = 0
+    local screen = hs.screen.mainScreen():frame()
+    hs.alert.show(message, {x = screen.w/2, y = screen.y + screen.h * 0.2}, duration or 2)
+    alert.defaultStyle.atScreenEdge = 1
+end
+
+-- 处理电源状态变化
+function handlePowerChange()
+    local isPluggedIn = hs.battery.isCharged() or hs.battery.isCharging()
+    
+    -- 只在状态真正变化时才处理
+    if lastPowerState == isPluggedIn then
+        return
+    end
+    
+    lastPowerState = isPluggedIn
+    
+    -- 安全地设置休眠策略
+    local function setCaffeinate(setting, value)
+        local success, error = pcall(function()
+            hs.caffeinate.set(setting, value, true)
+        end)
+        if not success then
+            print("设置 " .. setting .. " 失败: " .. tostring(error))
+        end
+    end
+    
+    if isPluggedIn then
+        -- 接入电源，禁止休眠
+        setCaffeinate("displayIdle", true)
+        setCaffeinate("systemIdle", true)
+        
+        -- 更新菜单栏图标
+        if menuBarItem then
+            menuBarItem:setIcon("~/.hammerspoon/icon/caffeine-on.pdf")
+            menuBarItem:setTooltip("电源已连接 - 已禁止休眠")
+        end
+        
+        showPositionedAlert("🔌 已接入电源 - 禁止休眠")
+        print("Power connected - Sleep disabled")
+    else
+        -- 使用电池，允许休眠
+        setCaffeinate("displayIdle", false)
+        setCaffeinate("systemIdle", false)
+        
+        -- 更新菜单栏图标
+        if menuBarItem then
+            menuBarItem:setIcon("~/.hammerspoon/icon/caffeine-off.pdf")
+            menuBarItem:setTooltip("使用电池 - 允许休眠")
+        end
+        
+        showPositionedAlert("🔋 使用电池 - 允许休眠")
+        print("On battery - Sleep enabled")
+    end
+end
+
+-- 初始化电源监听器
+function initPowerWatcher()
+    -- 停止现有的监听器
+    if powerWatcher then
+        powerWatcher:stop()
+        powerWatcher = nil
+    end
+    
+    -- 重置状态
+    lastPowerState = nil
+    
+    -- 创建菜单栏项目
+    if not menuBarItem then
+        menuBarItem = hs.menubar.new()
+        if menuBarItem then
+            menuBarItem:setClickCallback(function()
+                local isPluggedIn = hs.battery.isCharged() or hs.battery.isCharging()
+                local message = isPluggedIn and "🔌 当前状态：电源已连接 - 已禁止休眠" or "🔋 当前状态：使用电池 - 允许休眠"
+                showPositionedAlert(message)
+            end)
+        else
+            print("创建菜单栏项目失败")
+        end
+    end
+    
+    -- 创建新的电源监听器
+    powerWatcher = hs.battery.watcher.new(handlePowerChange)
+    if powerWatcher then
+        powerWatcher:start()
+        -- 初次启动时静默设置状态（不显示通知）
+        local isPluggedIn = hs.battery.isCharged() or hs.battery.isCharging()
+        lastPowerState = isPluggedIn
+        
+        -- 静默设置初始状态
+        local function setCaffeinate(setting, value)
+            pcall(function()
+                hs.caffeinate.set(setting, value, true)
+            end)
+        end
+        
+        if isPluggedIn then
+            setCaffeinate("displayIdle", true)
+            setCaffeinate("systemIdle", true)
+            if menuBarItem then
+                menuBarItem:setIcon("~/.hammerspoon/icon/caffeine-on.pdf")
+                menuBarItem:setTooltip("电源已连接 - 已禁止休眠")
+            end
+            print("Power connected - Sleep disabled (初始状态)")
+        else
+            setCaffeinate("displayIdle", false)
+            setCaffeinate("systemIdle", false)
+            if menuBarItem then
+                menuBarItem:setIcon("~/.hammerspoon/icon/caffeine-off.pdf")
+                menuBarItem:setTooltip("使用电池 - 允许休眠")
+            end
+            print("On battery - Sleep enabled (初始状态)")
+        end
+        
+        print("Power monitor initialized")
+    else
+        print("创建电源监听器失败")
+    end
+end
+
+-- 清理函数
+function cleanupPowerWatcher()
+    if powerWatcher then
+        powerWatcher:stop()
+        powerWatcher = nil
+    end
+    
+    if menuBarItem then
+        menuBarItem:delete()
+        menuBarItem = nil
+    end
+    
+    -- 恢复默认状态（允许休眠）
+    pcall(function()
+        hs.caffeinate.set("displayIdle", false, true)
+        hs.caffeinate.set("systemIdle", false, true)
+    end)
+    
+    print("Power monitor cleaned up")
+end
+
+-- 启动电源监听
+initPowerWatcher()
+
+-- 显示启动完成提示
+showPositionedAlert("Hammerspoon Realoaded")
+print("Hammerspoon config loaded")
