@@ -441,7 +441,7 @@ local KEY_APP_PAIRS = {
         Q = "企业微信.app",
         S = "Safari.app",
     --    W = "微信.app",
-        N = "Zen.app",
+        N = "Notion.app",
     --    P = "/System/Applications/Preview.app",
         C = "Google Chrome Canary.app",
     --    M = "Microsoft Outlook.app",
@@ -802,28 +802,30 @@ configFileWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", re
 configFileWatcher:start()
 
 -- auto close bluetooth when sleep
-function bluetoothSwitch(state)
-    -- state: 0(off), 1(on)
-    cmd = "/usr/local/bin/blueutil --power "..(state)
-    result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-end
+--  function bluetoothSwitch(state)
+--      -- state: 0(off), 1(on)
+--      cmd = "/usr/local/bin/blueutil --power "..(state)
+--      result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+--  end
+--  
+--  function caffeinateCallback(eventType)
+--      if (eventType == hs.caffeinate.watcher.screensDidSleep) then
+--        print("screensDidSleep")
+--        bluetoothSwitch(0)
+--      elseif (eventType == hs.caffeinate.watcher.screensDidWake) then
+--        print("screensDidWake")
+--        bluetoothSwitch(1)
+--      elseif (eventType == hs.caffeinate.watcher.screensDidLock) then
+--        print("screensDidLock")
+--        bluetoothSwitch(0)
+--      elseif (eventType == hs.caffeinate.watcher.screensDidUnlock) then
+--        print("screensDidUnlock")
+--        bluetoothSwitch(1)
+--      end
+--  end
 
-function caffeinateCallback(eventType)
-    if (eventType == hs.caffeinate.watcher.screensDidSleep) then
-      print("screensDidSleep")
-    elseif (eventType == hs.caffeinate.watcher.screensDidWake) then
-      print("screensDidWake")
-    elseif (eventType == hs.caffeinate.watcher.screensDidLock) then
-      print("screensDidLock")
-      bluetoothSwitch(0)
-    elseif (eventType == hs.caffeinate.watcher.screensDidUnlock) then
-      print("screensDidUnlock")
-      bluetoothSwitch(1)
-    end
-end
-
-caffeinateWatcher = hs.caffeinate.watcher.new(caffeinateCallback)
-caffeinateWatcher:start()
+--caffeinateWatcher = hs.caffeinate.watcher.new(caffeinateCallback)
+--caffeinateWatcher:start()
 
 -- Hammerspoon 配置文件
 -- 电源状态监听器 - 自动管理系统休眠策略
