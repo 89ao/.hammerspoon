@@ -87,7 +87,7 @@ spoon.ModalMgr:new("appM")
 local cmodal = spoon.ModalMgr.modal_list["appM"]
 if not hsapp_list then
     hsapp_list = {
-        {key = '1', name = 'Google Chrome Canary', alias = '自研上云'},
+        {key = '1', name = 'Google Chrome Beta', alias = '自研上云'},
         {key = '2', name = 'Google Chrome', alias = 'ECM账号'},
     	{key = '3', name = 'Firefox', alias = '测试账号'},
         {key = '4', name = 'Zen', alias = '腾讯云私人'},
@@ -131,114 +131,114 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- clipshowM modal environment
-if spoon.ClipShow then
-    spoon.ModalMgr:new("clipshowM")
-    local cmodal = spoon.ModalMgr.modal_list["clipshowM"]
-    cmodal:bind('', 'escape', 'Deactivate clipshowM', function()
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'Q', 'Deactivate clipshowM', function()
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'N', 'Save this Session', function()
-        spoon.ClipShow:saveToSession()
-    end)
-    cmodal:bind('', 'R', 'Restore last Session', function()
-        spoon.ClipShow:restoreLastSession()
-    end)
-    cmodal:bind('', 'B', 'Open in Browser', function()
-        spoon.ClipShow:openInBrowserWithRef()
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'S', 'Search with Bing', function()
-        spoon.ClipShow:openInBrowserWithRef("https://www.bing.com/search?q=")
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'M', 'Open in MacVim', function()
-        spoon.ClipShow:openWithCommand("/usr/local/bin/mvim")
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'F', 'Save to Desktop', function()
-        spoon.ClipShow:saveToFile()
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'H', 'Search in Github', function()
-        spoon.ClipShow:openInBrowserWithRef("https://github.com/search?q=")
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'G', 'Search with Google', function()
-        spoon.ClipShow:openInBrowserWithRef("https://www.google.com/search?q=")
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-    cmodal:bind('', 'L', 'Open in Sublime Text', function()
-        spoon.ClipShow:openWithCommand("/usr/local/bin/subl")
-        spoon.ClipShow:toggleShow()
-        spoon.ModalMgr:deactivate({"clipshowM"})
-    end)
-
-    -- Register clipshowM with modal supervisor
-    hsclipsM_keys = hsclipsM_keys or {"alt", "C"}
-    if string.len(hsclipsM_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hsclipsM_keys[1], hsclipsM_keys[2], "Enter clipshowM Environment", function()
-            -- We need to take action upon hsclipsM_keys is pressed, since pressing another key to showing ClipShow panel is redundant.
-            spoon.ClipShow:toggleShow()
-            -- Need a little trick here. Since the content type of system clipboard may be "URL", in which case we don't need to activate clipshowM.
-            if spoon.ClipShow.canvas:isShowing() then
-                spoon.ModalMgr:deactivateAll()
-                spoon.ModalMgr:activate({"clipshowM"})
-            end
-        end)
-    end
-end
+-- if spoon.ClipShow then
+--     spoon.ModalMgr:new("clipshowM")
+--     local cmodal = spoon.ModalMgr.modal_list["clipshowM"]
+--     cmodal:bind('', 'escape', 'Deactivate clipshowM', function()
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'Q', 'Deactivate clipshowM', function()
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'N', 'Save this Session', function()
+--         spoon.ClipShow:saveToSession()
+--     end)
+--     cmodal:bind('', 'R', 'Restore last Session', function()
+--         spoon.ClipShow:restoreLastSession()
+--     end)
+--     cmodal:bind('', 'B', 'Open in Browser', function()
+--         spoon.ClipShow:openInBrowserWithRef()
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'S', 'Search with Bing', function()
+--         spoon.ClipShow:openInBrowserWithRef("https://www.bing.com/search?q=")
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'M', 'Open in MacVim', function()
+--         spoon.ClipShow:openWithCommand("/usr/local/bin/mvim")
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'F', 'Save to Desktop', function()
+--         spoon.ClipShow:saveToFile()
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'H', 'Search in Github', function()
+--         spoon.ClipShow:openInBrowserWithRef("https://github.com/search?q=")
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'G', 'Search with Google', function()
+--         spoon.ClipShow:openInBrowserWithRef("https://www.google.com/search?q=")
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+--     cmodal:bind('', 'L', 'Open in Sublime Text', function()
+--         spoon.ClipShow:openWithCommand("/usr/local/bin/subl")
+--         spoon.ClipShow:toggleShow()
+--         spoon.ModalMgr:deactivate({"clipshowM"})
+--     end)
+-- 
+--     -- Register clipshowM with modal supervisor
+--     hsclipsM_keys = hsclipsM_keys or {"alt", "C"}
+--     if string.len(hsclipsM_keys[2]) > 0 then
+--         spoon.ModalMgr.supervisor:bind(hsclipsM_keys[1], hsclipsM_keys[2], "Enter clipshowM Environment", function()
+--             -- We need to take action upon hsclipsM_keys is pressed, since pressing another key to showing ClipShow panel is redundant.
+--             spoon.ClipShow:toggleShow()
+--             -- Need a little trick here. Since the content type of system clipboard may be "URL", in which case we don't need to activate clipshowM.
+--             if spoon.ClipShow.canvas:isShowing() then
+--                 spoon.ModalMgr:deactivateAll()
+--                 spoon.ModalMgr:activate({"clipshowM"})
+--             end
+--         end)
+--     end
+-- end
 
 
 
 
 ----------------------------------------------------------------------------------------------------
 -- countdownM modal environment
-if spoon.CountDown then
-    spoon.ModalMgr:new("countdownM")
-    local cmodal = spoon.ModalMgr.modal_list["countdownM"]
-    cmodal:bind('', 'escape', 'Deactivate countdownM', function() spoon.ModalMgr:deactivate({"countdownM"}) end)
-    cmodal:bind('', 'Q', 'Deactivate countdownM', function() spoon.ModalMgr:deactivate({"countdownM"}) end)
-    cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
-    cmodal:bind('', '0', '5 Minutes Countdown', function()
-        spoon.CountDown:startFor(5)
-        spoon.ModalMgr:deactivate({"countdownM"})
-    end)
-    for i = 1, 9 do
-        cmodal:bind('', tostring(i), string.format("%s Minutes Countdown", 10 * i), function()
-            spoon.CountDown:startFor(10 * i)
-            spoon.ModalMgr:deactivate({"countdownM"})
-        end)
-    end
-    cmodal:bind('', 'return', '25 Minutes Countdown', function()
-        spoon.CountDown:startFor(25)
-        spoon.ModalMgr:deactivate({"countdownM"})
-    end)
-    cmodal:bind('', 'space', 'Pause/Resume CountDown', function()
-        spoon.CountDown:pauseOrResume()
-        spoon.ModalMgr:deactivate({"countdownM"})
-    end)
-
-    -- Register countdownM with modal supervisor
-    hscountdM_keys = hscountdM_keys or {"alt", "I"}
-    if string.len(hscountdM_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hscountdM_keys[1], hscountdM_keys[2], "Enter countdownM Environment", function()
-            spoon.ModalMgr:deactivateAll()
-            -- Show the keybindings cheatsheet once countdownM is activated
-            spoon.ModalMgr:activate({"countdownM"}, "#FF6347", true)
-        end)
-    end
-end
+-- if spoon.CountDown then
+--     spoon.ModalMgr:new("countdownM")
+--     local cmodal = spoon.ModalMgr.modal_list["countdownM"]
+--     cmodal:bind('', 'escape', 'Deactivate countdownM', function() spoon.ModalMgr:deactivate({"countdownM"}) end)
+--     cmodal:bind('', 'Q', 'Deactivate countdownM', function() spoon.ModalMgr:deactivate({"countdownM"}) end)
+--     cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+--     cmodal:bind('', '0', '5 Minutes Countdown', function()
+--         spoon.CountDown:startFor(5)
+--         spoon.ModalMgr:deactivate({"countdownM"})
+--     end)
+--     for i = 1, 9 do
+--         cmodal:bind('', tostring(i), string.format("%s Minutes Countdown", 10 * i), function()
+--             spoon.CountDown:startFor(10 * i)
+--             spoon.ModalMgr:deactivate({"countdownM"})
+--         end)
+--     end
+--     cmodal:bind('', 'return', '25 Minutes Countdown', function()
+--         spoon.CountDown:startFor(25)
+--         spoon.ModalMgr:deactivate({"countdownM"})
+--     end)
+--     cmodal:bind('', 'space', 'Pause/Resume CountDown', function()
+--         spoon.CountDown:pauseOrResume()
+--         spoon.ModalMgr:deactivate({"countdownM"})
+--     end)
+-- 
+--     -- Register countdownM with modal supervisor
+--     hscountdM_keys = hscountdM_keys or {"alt", "I"}
+--     if string.len(hscountdM_keys[2]) > 0 then
+--         spoon.ModalMgr.supervisor:bind(hscountdM_keys[1], hscountdM_keys[2], "Enter countdownM Environment", function()
+--             spoon.ModalMgr:deactivateAll()
+--             -- Show the keybindings cheatsheet once countdownM is activated
+--             spoon.ModalMgr:activate({"countdownM"}, "#FF6347", true)
+--         end)
+--     end
+-- end
 
 ----------------------------------------------------------------------------------------------------
 -- Register lock screen
@@ -300,38 +300,30 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- cheatsheetM modal environment (Because KSheet Spoon is NOT loaded, cheatsheetM will NOT be activated)
-if spoon.KSheet then
-    spoon.ModalMgr:new("cheatsheetM")
-    local cmodal = spoon.ModalMgr.modal_list["cheatsheetM"]
-    cmodal:bind('', 'escape', 'Deactivate cheatsheetM', function()
-        spoon.KSheet:hide()
-        spoon.ModalMgr:deactivate({"cheatsheetM"})
-    end)
-    cmodal:bind('', 'Q', 'Deactivate cheatsheetM', function()
-        spoon.KSheet:hide()
-        spoon.ModalMgr:deactivate({"cheatsheetM"})
-    end)
-
-    -- Register cheatsheetM with modal supervisor
-    hscheats_keys = hscheats_keys or {"alt", "S"}
-    if string.len(hscheats_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hscheats_keys[1], hscheats_keys[2], "Enter cheatsheetM Environment", function()
-            spoon.KSheet:show()
-            spoon.ModalMgr:deactivateAll()
-            spoon.ModalMgr:activate({"cheatsheetM"})
-        end)
-    end
-end
+-- if spoon.KSheet then
+--     spoon.ModalMgr:new("cheatsheetM")
+--     local cmodal = spoon.ModalMgr.modal_list["cheatsheetM"]
+--     cmodal:bind('', 'escape', 'Deactivate cheatsheetM', function()
+--         spoon.KSheet:hide()
+--         spoon.ModalMgr:deactivate({"cheatsheetM"})
+--     end)
+--     cmodal:bind('', 'Q', 'Deactivate cheatsheetM', function()
+--         spoon.KSheet:hide()
+--         spoon.ModalMgr:deactivate({"cheatsheetM"})
+--     end)
+-- 
+--     -- Register cheatsheetM with modal supervisor
+--     hscheats_keys = hscheats_keys or {"alt", "S"}
+--     if string.len(hscheats_keys[2]) > 0 then
+--         spoon.ModalMgr.supervisor:bind(hscheats_keys[1], hscheats_keys[2], "Enter cheatsheetM Environment", function()
+--             spoon.KSheet:show()
+--             spoon.ModalMgr:deactivateAll()
+--             spoon.ModalMgr:activate({"cheatsheetM"})
+--         end)
+--     end
+-- end
 
 ----------------------------------------------------------------------------------------------------
--- Register AClock
-if spoon.AClock then
-    hsaclock_keys = hsaclock_keys or {"alt", "T"}
-    if string.len(hsaclock_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hsaclock_keys[1], hsaclock_keys[2], "Toggle Floating Clock", function() spoon.AClock:toggleShow() end)
-    end
-end
-
 
 ----------------------------------------------------------------------------------------------------
 -- Finally we initialize ModalMgr supervisor
@@ -433,93 +425,93 @@ appWatcher = hs.application.watcher.new(applicationWatcher)
 appWatcher:start()
 
 ------------------------------------------
-local KEY_APP_PAIRS = {
-    --    A = "IntelliJ IDEA CE.app",
-    --    C = "Google Chrome.app",
-    --    D = "Dash.app",
-    --    E = "Visual Studio Code.app",
-        Q = "企业微信.app",
-        S = "Safari.app",
-    --    W = "微信.app",
-        N = "Notion.app",
-    --    P = "/System/Applications/Preview.app",
-        C = "Google Chrome Canary.app",
-    --    M = "Microsoft Outlook.app",
-        M = "Notion Calendar.app",
-        [1] = "MWeb Pro.app",
-        [2] = "/Applications/Sublime Text.app",
-        [3] = "Sticky Notepad.app",
-        D = "Google Chrome.app",
-        E = "iTerm.app",
-    --    V = "MacVim.app",
-        J = "AppCleaner.app",
-        P = "Visual Studio Code.app",
-        V = "Doubao.app",
-        X = "Lattics.app",
-        Z = "Zotero.app"
-    }
-    
--- 显示 Finder: Alt + f
-hs.hotkey.bind({"alt"}, "f", function()
---    hs.application.open("/Applications/Marta.app")
-    hs.application.get("com.apple.finder"):setFrontmost(true)
-    hs.application.open("/System/Library/CoreServices/Finder.app")
-    hs.application.get("com.apple.finder"):setFrontmost(true)
-end)
+-- local KEY_APP_PAIRS = {
+--     --    A = "IntelliJ IDEA CE.app",
+--     --    C = "Google Chrome.app",
+--     --    D = "Dash.app",
+--     --    E = "Visual Studio Code.app",
+-- --         Q = "企业微信.app",
+-- --         S = "Safari.app",
+-- --     --    W = "微信.app",
+-- --         N = "Notion.app",
+-- --     --    P = "/System/Applications/Preview.app",
+-- --         C = "Google Chrome.app",
+-- --     --    M = "Microsoft Outlook.app",
+-- --         M = "Notion Calendar.app",
+-- --         [1] = "MWeb Pro.app",
+-- --         [2] = "/Applications/Sublime Text.app",
+-- --         [3] = "Sticky Notepad.app",
+-- --         D = "Google Chrome Beta.app",
+-- --         E = "iTerm.app",
+-- --     --    V = "MacVim.app",
+-- --         J = "AppCleaner.app",
+-- --         P = "Visual Studio Code.app",
+-- --         V = "WorkBuddy.app",
+-- --         T = "Telegram.app",
+-- --         Z = "Opera.app"
+--     }
+--     
+-- -- 显示 Finder: Alt + f
+-- -- hs.hotkey.bind({"alt"}, "f", function()
+-- -- --    hs.application.open("/Applications/Marta.app")
+-- --     hs.application.get("com.apple.finder"):setFrontmost(true)
+-- --     hs.application.open("/System/Library/CoreServices/Finder.app")
+-- --     hs.application.get("com.apple.finder"):setFrontmost(true)
+-- -- end)
+-- 
+-- --------------------------------------------------------------------------------------
+-- -- 按下 "Alt+键" 会打开或激活对应的应用，如果应用不是绝对路径，则指的是 /Applications 中的应用 --
+-- --------------------------------------------------------------------------------------
+-- function bindAppWithHotkey(keyAppPairs)
+--     for key, app in pairs(keyAppPairs) do
+--         -- local app = entry[2]
+--         -- local key = entry[1]
+-- 
+--         -- 路径不以 / 开头，则指的是 /Applications 中的应用，把路径补充完整
+--         if string.sub(app, 0, 1) ~= "/" then
+--             app = "/Applications/" .. app
+--         end
+-- 
+--         -- hs.alert.show(app)
+-- 
+--         hs.hotkey.bind({"alt"}, key .. "", function()
+--             hs.application.open(app)
+--         end)
+--     end
+-- end
 
---------------------------------------------------------------------------------------
--- 按下 "Alt+键" 会打开或激活对应的应用，如果应用不是绝对路径，则指的是 /Applications 中的应用 --
---------------------------------------------------------------------------------------
-function bindAppWithHotkey(keyAppPairs)
-    for key, app in pairs(keyAppPairs) do
-        -- local app = entry[2]
-        -- local key = entry[1]
-
-        -- 路径不以 / 开头，则指的是 /Applications 中的应用，把路径补充完整
-        if string.sub(app, 0, 1) ~= "/" then
-            app = "/Applications/" .. app
-        end
-
-        -- hs.alert.show(app)
-
-        hs.hotkey.bind({"alt"}, key .. "", function()
-            hs.application.open(app)
-        end)
-    end
-end
-
-bindAppWithHotkey(KEY_APP_PAIRS)
-
+-- bindAppWithHotkey(KEY_APP_PAIRS)
+-- 
 -- 窗口最大化
 hs.hotkey.bind({"alt", "ctrl"}, "Return", function()
     sizeFocusedWindow("Max")
 end)
 
--- 窗口左半屏
-hs.hotkey.bind({"alt", "ctrl"}, "Left", function()
-    sizeFocusedWindow("Half Left")
-end)
-
--- 窗口右半屏
-hs.hotkey.bind({"alt", "ctrl"}, "Right", function()
-    sizeFocusedWindow("Half Right")
-end)
-
--- 窗口靠左
-hs.hotkey.bind({"alt", "ctrl", "cmd"}, "Left", function()
-    moveFocusedWindow("Edge Left")
-end)
-
--- 窗口靠右
-hs.hotkey.bind({"alt", "ctrl", "cmd"}, "Right", function()
-    moveFocusedWindow("Edge Right")
-end)
-
--- 窗口居中
-hs.hotkey.bind({"alt", "ctrl"}, "C", function()
-    moveFocusedWindow("Center")
-end)
-
+ -- 窗口左半屏
+ hs.hotkey.bind({"alt", "ctrl"}, "Left", function()
+     sizeFocusedWindow("Half Left")
+ end)
+ 
+ -- 窗口右半屏
+ hs.hotkey.bind({"alt", "ctrl"}, "Right", function()
+     sizeFocusedWindow("Half Right")
+ end)
+ 
+ -- 窗口靠左
+ hs.hotkey.bind({"alt", "ctrl", "cmd"}, "Left", function()
+     moveFocusedWindow("Edge Left")
+ end)
+ 
+ -- 窗口靠右
+ hs.hotkey.bind({"alt", "ctrl", "cmd"}, "Right", function()
+     moveFocusedWindow("Edge Right")
+ end)
+ 
+ -- 窗口居中
+ hs.hotkey.bind({"alt", "ctrl"}, "C", function()
+     moveFocusedWindow("Center")
+ end)
+ 
 
 -- 设置当前窗口的大小
 function sizeFocusedWindow(mode)
